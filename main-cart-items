@@ -1,0 +1,20 @@
+(** Add this code to your main-cart-items.liquid file **)
+<div>
+    Rs.00 <progress max="99900" value="{{ cart.total_price }}"></progress> Rs.999
+<br>
+  {% if cart.items.size == 0 %}
+          <p> Add items to your cart to receive free shipping.</p>
+      {% endif %}
+    {% if cart.items.size != 0 %}
+          {% if cart.total_price >= 99900 %}
+                <p> You've got free shipping </p>
+              {% elsif cart.total_price < 99900 %}
+                  <p>You're only{{ 99900 | minus: cart.total_price | money }}away from free shipping.</p>
+            {% endif %}
+    {% endif %}
+</div>
+
+
+(* Into Cart.js File add this Line to make it auto reload the progress bar  *)
+(* add this line into updateQuantity(line, quantity, name, variantId)    just below the  const parsedState = JSON.parse(state);  this will help you to make it auto reload without refreshing again and again *)
+document.querySelector('progress').value = parsedState.total_price;
